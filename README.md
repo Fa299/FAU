@@ -44,6 +44,24 @@
 1. **Télécharger Docker Desktop** :
    [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)
 
+---- Fred: l'installation de Postgre dans Docker fonctionne mais l'extension PgVector est inconnue (la commande n°4 ne fonctionne pas)
+Donc j'ai appliqué plutôt cette installation avec un postgre qui contient pgvector:
+
+docker pull ankane/pgvector
+
+docker run --name fau-postgres \
+   -e POSTGRES_PASSWORD=secret \
+   -e POSTGRES_USER=admin \
+   -e POSTGRES_DB=fau \
+   -p 5432:5432 \
+   -d ankane/pgvector  
+
+docker exec -it fau-postgres psql -U admin -d fau -c "CREATE EXTENSION vector;"
+
+-----------------  Fred
+
+
+
 2. **Lancer le conteneur PostgreSQL** :
    ```bash
    docker run --name fau-postgres \
@@ -63,6 +81,14 @@
    ```bash
    docker exec -it fau-postgres psql -U admin -d fau -c "CREATE EXTENSION vector;"
    ```
+
+--------- Fred: la commande psql n'est pas reconnue
+
+je vais donc plutôt tenter de connecter PgAdmin à ma base en docker
+en suivant ceci: https://medium.com/@marvinjungre/get-postgresql-and-pgadmin-4-up-and-running-with-docker-4a8d81048aea
+
+------------ Fred
+
 
 5. **Connexion à la base** :
    ```bash
